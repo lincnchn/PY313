@@ -1,0 +1,886 @@
+bash
+cat > /mnt/user-data/outputs/PY313_study_guide_v2.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PY313 — Final Exam Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #09090e;
+  --bg2:    #0f0f17;
+  --bg3:    #16161f;
+  --card:   #13131a;
+  --border: rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.11);
+  --text:   #ddd9f0;
+  --muted:  #8480a0;
+  --dim:    #4f4c68;
+
+  --s: #818cf8;   --sbg: rgba(129,140,248,.10); --sborder: rgba(129,140,248,.22);
+  --m: #34d399;   --mbg: rgba(52,211,153,.10);  --mborder: rgba(52,211,153,.22);
+  --p: #f97316;   --pbg: rgba(249,115,22,.10);  --pborder: rgba(249,115,22,.22);
+
+  --mono: 'JetBrains Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Sora', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ─── NAV ─── */
+nav{width:230px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem 0;display:flex;flex-direction:column;gap:0}
+.nav-brand{padding:0 1.25rem 1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.nav-course{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:5px}
+.nav-title{font-family:var(--serif);font-size:16px;color:var(--text);line-height:1.3;font-style:italic}
+.nav-group{padding:0 .75rem;margin-bottom:1.25rem}
+.nav-group-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:0 .5rem;margin-bottom:.4rem;display:block}
+.nav-link{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .12s;cursor:pointer}
+.nav-link:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.ds{background:var(--s)}.dm{background:var(--m)}.dp{background:var(--p)}
+.dnone{background:var(--dim)}
+
+/* ─── MAIN ─── */
+main{flex:1;max-width:900px;padding:3rem 3rem 6rem}
+
+/* ─── HERO ─── */
+.hero{padding-bottom:2.5rem;border-bottom:1px solid var(--border);margin-bottom:3rem}
+.hero-eye{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:.75rem}
+.hero-h{font-family:var(--serif);font-size:52px;font-weight:400;line-height:1.05;margin-bottom:.75rem;font-style:italic}
+.hero-h em{color:var(--s);font-style:normal}
+.hero-sub{font-size:13.5px;color:var(--muted);max-width:540px;line-height:1.75}
+.chips{display:flex;gap:8px;margin-top:1.5rem;flex-wrap:wrap}
+.chip{padding:5px 14px;border-radius:20px;font-size:11px;font-family:var(--mono);letter-spacing:.04em}
+.chip-s{background:var(--sbg);color:var(--s);border:1px solid var(--sborder)}
+.chip-m{background:var(--mbg);color:var(--m);border:1px solid var(--mborder)}
+.chip-p{background:var(--pbg);color:var(--p);border:1px solid var(--pborder)}
+
+/* ─── SECTION HEADER ─── */
+.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.75rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em;margin-bottom:4px}
+.sec-title{font-family:var(--serif);font-size:30px;font-weight:400;font-style:italic;line-height:1}
+.sec-tag{font-size:9.5px;font-family:var(--mono);letter-spacing:.08em;padding:3px 10px;border-radius:20px;text-transform:uppercase}
+.st-s{background:var(--sbg);color:var(--s);border:1px solid var(--sborder)}
+.st-m{background:var(--mbg);color:var(--m);border:1px solid var(--mborder)}
+.st-p{background:var(--pbg);color:var(--p);border:1px solid var(--pborder)}
+
+/* ─── TOPIC CARD ─── */
+.topic{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:1rem}
+.t-head{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.2rem;cursor:pointer;background:var(--bg3);border-bottom:1px solid transparent;transition:background .12s;user-select:none}
+.topic.open .t-head{border-bottom-color:var(--border)}
+.t-head:hover{background:rgba(255,255,255,.025)}
+.t-left{display:flex;align-items:center;gap:10px}
+.t-idx{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.05em}
+.t-name{font-size:14px;font-weight:500;color:#e8e4ff}
+.t-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.t-right{display:flex;align-items:center;gap:8px}
+.badge{font-size:9.5px;font-family:var(--mono);padding:2px 8px;border-radius:20px;letter-spacing:.04em}
+.b-hot{background:rgba(251,113,133,.14);color:#fb7185;border:1px solid rgba(251,113,133,.28)}
+.b-key{background:rgba(251,191,36,.12);color:#fbbf24;border:1px solid rgba(251,191,36,.24)}
+.b-new{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.24)}
+.b-std{background:rgba(148,163,184,.08);color:#94a3b8;border:1px solid rgba(148,163,184,.18)}
+.chev{font-size:10px;color:var(--dim);transition:transform .2s}
+.topic.open .chev{transform:rotate(180deg)}
+.t-body{padding:1.25rem;display:none}
+.topic.open .t-body{display:block}
+
+/* ─── CONTENT ─── */
+.block{margin-bottom:1.2rem}
+.block:last-child{margin-bottom:0}
+.blabel{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:.45rem}
+.btext{font-size:13.5px;color:var(--muted);line-height:1.8}
+.btext strong{color:var(--text);font-weight:500}
+.btext em{color:#c4b5fd;font-style:normal}
+
+.eq{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:7px;padding:.8rem 1rem;margin:.65rem 0;font-family:var(--mono);font-size:12.5px;color:#e8e4ff;line-height:1.65}
+.eq-lbl{font-size:9.5px;color:var(--dim);font-family:var(--sans);letter-spacing:.05em;margin-bottom:4px;text-transform:uppercase}
+.eq-s{border-left:2.5px solid var(--s)}
+.eq-m{border-left:2.5px solid var(--m)}
+.eq-p{border-left:2.5px solid var(--p)}
+
+.box{border-radius:7px;padding:.8rem 1rem;margin:.65rem 0;font-size:13px;line-height:1.75}
+.box-s{background:var(--sbg);color:#c4b5fd;border:1px solid var(--sborder)}
+.box-m{background:var(--mbg);color:#6ee7b7;border:1px solid var(--mborder)}
+.box-p{background:var(--pbg);color:#fdba74;border:1px solid var(--pborder)}
+.box-warn{background:rgba(251,191,36,.08);color:#fcd34d;border:1px solid rgba(251,191,36,.22)}
+
+hr.div{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+
+/* ─── FORMULA SHEET ─── */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.fcard{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:1rem}
+.fcard-title{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem}
+.fline{font-family:var(--mono);font-size:11.5px;color:#e8e4ff;line-height:2;border-bottom:1px solid var(--border);padding-bottom:2px;margin-bottom:2px}
+.fline:last-child{border-bottom:none}
+.fdesc{display:block;font-family:var(--sans);font-size:10.5px;color:var(--dim);line-height:1.4;padding-bottom:4px}
+
+/* ─── CONSTANTS ─── */
+.const-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.const{font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:3px 9px;color:var(--muted)}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-course">BU · PY313 · Thornton/Rex/Hood 5e</div>
+    <div class="nav-title">Modern Physics<br>Final Exam Guide</div>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Overview</span>
+    <a class="nav-link" href="#hero"><span class="dot dnone"></span>Home</a>
+    <a class="nav-link" href="#formulas"><span class="dot dnone"></span>Formula Sheet</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label" style="color:var(--s)">Ch 9 · Statistical Physics</span>
+    <a class="nav-link" href="#s1"><span class="dot ds"></span>Maxwell Distribution</a>
+    <a class="nav-link" href="#s2"><span class="dot ds"></span>Equipartition Theorem</a>
+    <a class="nav-link" href="#s3"><span class="dot ds"></span>Classical vs Quantum Stats</a>
+    <a class="nav-link" href="#s4"><span class="dot ds"></span>Fermi-Dirac Statistics</a>
+    <a class="nav-link" href="#s5"><span class="dot ds"></span>Bose-Einstein Statistics</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label" style="color:var(--m)">Ch 10 · Molecules & Solids</span>
+    <a class="nav-link" href="#m1"><span class="dot dm"></span>Molecular Bonds & Spectra</a>
+    <a class="nav-link" href="#m2"><span class="dot dm"></span>Lasers & Stimulated Emission</a>
+    <a class="nav-link" href="#m3"><span class="dot dm"></span>Structural Properties</a>
+    <a class="nav-link" href="#m4"><span class="dot dm"></span>Thermal & Magnetic Properties</a>
+    <a class="nav-link" href="#m5"><span class="dot dm"></span>Superconductivity</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label" style="color:var(--p)">Ch 11 · Semiconductors</span>
+    <a class="nav-link" href="#p1"><span class="dot dp"></span>Band Theory of Solids</a>
+    <a class="nav-link" href="#p2"><span class="dot dp"></span>Semiconductor Theory</a>
+    <a class="nav-link" href="#p3"><span class="dot dp"></span>Semiconductor Devices</a>
+    <a class="nav-link" href="#p4"><span class="dot dp"></span>Nanotechnology</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-eye">Boston University · PY313 · Thornton, Rex & Hood 5th Edition</div>
+  <h1 class="hero-h">Final Exam<br><em>Study Guide</em></h1>
+  <p class="hero-sub">Chapters 9, 10, and 11 — everything covered, nothing extra. Click any card to expand. All equations, physical intuition, and exam traps in one place.</p>
+  <div class="chips">
+    <span class="chip chip-s">Ch 9 · Statistical Physics · §9.1–9.7</span>
+    <span class="chip chip-m">Ch 10 · Molecules & Solids · §10.1–10.6</span>
+    <span class="chip chip-p">Ch 11 · Semiconductors · §11.1–11.4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CHAPTER 9: STATISTICAL PHYSICS
+═══════════════════════════════════════ -->
+<div class="sec-hdr" id="ch9">
+  <div><div class="sec-num">Chapter 9</div><div class="sec-title" style="color:var(--s)">Statistical Physics</div></div>
+  <span class="sec-tag st-s">§9.1 – 9.7</span>
+</div>
+
+<!-- S1: Maxwell Velocity Distribution -->
+<div class="topic open" id="s1">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">9.2</span><div><div class="t-name">Maxwell Velocity & Speed Distribution</div><div class="t-sub">Classical distribution for ideal gas molecules</div></div></div>
+    <div class="t-right"><span class="badge b-key">§9.2–9.4</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Maxwell velocity distribution</div>
+      <div class="btext">In an ideal gas, each velocity component (vx, vy, vz) is independently distributed as a Gaussian. The 3D velocity distribution is:</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Maxwell velocity distribution</div>
+        f(v) = (m/2πkT)^(3/2) · exp(−mv²/2kT)
+      </div>
+      <div class="btext">This gives the probability per unit volume in velocity space of finding a molecule with velocity <strong>v</strong> = (vx, vy, vz).</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Maxwell speed distribution F(v)</div>
+      <div class="btext">To get a distribution in <em>speed</em> (scalar), integrate over all velocity directions — a shell of radius v in velocity space with area 4πv²:</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Maxwell speed distribution</div>
+        F(v) = 4π n (m/2πkT)^(3/2) · v² · exp(−mv²/2kT)
+      </div>
+      <div class="btext">The v² factor makes it zero at v=0, rises to a peak, then the exponential kills it at high v.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Three characteristic speeds</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Most probable speed (peak of F(v) — set dF/dv = 0)</div>
+        v_p = √(2kT/m)
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Average speed</div>
+        ⟨v⟩ = √(8kT/πm)
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">RMS speed (from ½m⟨v²⟩ = 3/2 kT)</div>
+        v_rms = √(3kT/m)
+      </div>
+      <div class="box box-s">Ordering: v_p &lt; ⟨v⟩ &lt; v_rms. The ratio is √2 : √(8/π) : √3 ≈ 1 : 1.13 : 1.22. Exam often asks you to identify which is which from a graph — v_p is the peak, v_rms is furthest right.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S2: Equipartition -->
+<div class="topic" id="s2">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">9.3</span><div><div class="t-name">Equipartition Theorem</div><div class="t-sub">Classical energy per degree of freedom</div></div></div>
+    <div class="t-right"><span class="badge b-std">§9.3</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">The theorem</div>
+      <div class="btext">In thermal equilibrium, each <strong>quadratic</strong> degree of freedom in the Hamiltonian carries an average energy of kT/2.</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Energy per degree of freedom (classical)</div>
+        ⟨E⟩ per DOF = ½kT
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Counting degrees of freedom</div>
+      <div class="btext">Monatomic gas: 3 translational → U = 3/2 kT per molecule → C_v = 3/2 R per mole.<br><br>
+      Diatomic gas (rigid): 3 translational + 2 rotational = 5 DOF → U = 5/2 kT → C_v = 5/2 R.<br><br>
+      Diatomic (with vibration): add 2 more (KE + PE of vibration) = 7 DOF → C_v = 7/2 R.<br><br>
+      Monatomic solid: 3 KE + 3 PE = 6 DOF → U = 3kT per atom → C_v = 3R = Dulong-Petit law.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Why it fails at low temperature</div>
+      <div class="btext">Equipartition is classical — it assumes all modes are always excited. Quantum mechanically, a mode is only excited if kT ≳ ℏω (its energy quantum). At low T, vibrational modes are "frozen out" (kT ≪ ℏω), so they contribute less than kT/2. This is why measured C_v of diatomic gases is ~5/2 R at room temp, not 7/2 R.</div>
+      <div class="box box-s">This is the historical motivation for quantum statistics — classical equipartition predicts too much heat capacity for solids at low T, and divergent energy for blackbody radiation (the UV catastrophe).</div>
+    </div>
+  </div>
+</div>
+
+<!-- S3: Classical vs Quantum Statistics -->
+<div class="topic" id="s3">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">9.5</span><div><div class="t-name">Classical vs Quantum Statistics</div><div class="t-sub">When MB applies, and when you must use FD or BE</div></div></div>
+    <div class="t-right"><span class="badge b-key">§9.5</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">The three distribution functions</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Maxwell-Boltzmann — classical, distinguishable, no restriction on occupancy</div>
+        f_MB(E) = A · e^(−E/kT)
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Fermi-Dirac — fermions (half-integer spin), Pauli exclusion enforced</div>
+        f_FD(E) = 1 / [e^((E−E_f)/kT) + 1]
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Bose-Einstein — bosons (integer spin), no restriction on occupancy</div>
+        f_BE(E) = 1 / [e^((E−μ)/kT) − 1]
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">When does MB apply?</div>
+      <div class="btext">MB is valid when the average occupation of any quantum state is <strong>much less than 1</strong> — i.e. particles are spread over far more states than there are particles. This happens at high T, low density, or large mass. MB is NOT a restriction — it just happens that double-occupancy never occurs in practice.<br><br>Formally, when e^((E−μ)/kT) ≫ 1 for all E, both FD and BE reduce to MB. The ±1 becomes negligible.</div>
+      <div class="box box-s">Memory: MB = unlimited seating, nobody doubles up by chance. FD = Pauli physically forbids sharing. BE = bosons prefer to pile in. All three agree when states are mostly empty.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Symmetry of wave functions</div>
+      <div class="btext">The root reason for the split: fermion wavefunctions are <strong>antisymmetric</strong> under particle exchange (ψ changes sign) → automatically enforces Pauli exclusion. Boson wavefunctions are <strong>symmetric</strong> → no exclusion, bunching preferred.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S4: Fermi-Dirac -->
+<div class="topic" id="s4">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">9.6</span><div><div class="t-name">Fermi-Dirac Statistics</div><div class="t-sub">Electrons in metals — Fermi energy, conduction theory</div></div></div>
+    <div class="t-right"><span class="badge b-hot">§9.6 · most tested</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">The Fermi energy E_f</div>
+      <div class="btext">At T = 0, f_FD is a perfect step function: all states below E_f are filled (f = 1), all above are empty (f = 0). The step drops sharply from 1 to 0 at <em>E = E_f</em>. As T increases, the step blurs symmetrically around E_f — states within ~kT of E_f smear.</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Key identity — true at ALL temperatures</div>
+        f_FD(E_f) = 1 / [e^0 + 1] = 1/2
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Fermi energy for a 3D free electron gas</div>
+        E_f = (ℏ²/2m)(3π²n)^(2/3),   n = electron number density
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Fermi temperature T_f</div>
+      <div class="btext">Defined as T_f = E_f / k. For copper, E_f ≈ 7 eV → T_f ≈ 81,000 K. Room temperature is 300 K ≪ T_f, so metals are always in the <strong>degenerate</strong> regime — quantum effects completely dominate. At T ≫ T_f, the step would wash out and electrons would follow MB.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Density of states g(E)</div>
+      <div class="btext">f(E) gives probability of occupancy. g(E) gives how many states exist per unit energy. Both are needed:</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">3D free electron density of states</div>
+        g(E) ∝ E^(1/2)   (specifically: g(E) = (4π/h³)(2m)^(3/2) · E^(1/2))
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Number of electrons per unit volume per unit energy</div>
+        n(E) = g(E) · f(E)
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Classical theory of electrical conduction (Drude model)</div>
+      <div class="btext">Treat conduction electrons as a classical gas. Electrons accelerate under E field, scatter off ions with mean free time τ:</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Drude conductivity</div>
+        σ = ne²τ/m,   ρ = 1/σ = m/ne²τ
+      </div>
+      <div class="btext">Problem: Drude predicts electronic heat capacity = 3/2 Nk — far too large. Measured value is ~100× smaller.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Quantum theory of electrical conduction</div>
+      <div class="btext">Only electrons within ~kT of E_f can be scattered or thermally excited — a tiny fraction kT/E_f of all electrons. This explains why electronic heat capacity is so small: <em>C_v ∝ T</em> (linear, not constant). Quantum model also gives the mean free path via the Fermi velocity v_f = √(2E_f/m), which is much faster than the classical thermal speed.</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Fermi velocity</div>
+        v_f = √(2E_f/m)
+      </div>
+      <div class="box box-s">Exam trap: "why is measured C_v for metals much less than classical prediction?" Answer: only electrons near E_f participate thermally. Classical Drude model assumes all electrons contribute equally — wrong.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S5: Bose-Einstein -->
+<div class="topic" id="s5">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">9.7</span><div><div class="t-name">Bose-Einstein Statistics</div><div class="t-sub">Blackbody radiation, liquid helium, BEC</div></div></div>
+    <div class="t-right"><span class="badge b-key">§9.7</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Photons: blackbody radiation</div>
+      <div class="btext">Photons are spin-1 bosons with μ = 0 (photon number not conserved — freely created/absorbed). Average number of photons per mode:</div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Planck distribution</div>
+        ⟨n⟩ = 1 / [e^(hf/kT) − 1]
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Planck spectral energy density</div>
+        u(f,T) = (8πhf³/c³) / [e^(hf/kT) − 1]
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Wien's displacement law</div>
+        λ_max · T = 2.898 × 10⁻³ m·K
+      </div>
+      <div class="eq eq-s">
+        <div class="eq-lbl">Stefan-Boltzmann law (total power per unit area)</div>
+        P/A = σT⁴,   σ = 5.67 × 10⁻⁸ W/m²K⁴
+      </div>
+      <div class="box box-s">UV catastrophe: classical Rayleigh-Jeans gives u ∝ f² → infinite total energy. Planck's quantization adds the e^(hf/kT) denominator, which crushes the distribution at high f.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Liquid helium & superfluidity</div>
+      <div class="btext">⁴He atoms are bosons (even number of fermions → integer total spin). Below T_λ = 2.17 K, ⁴He becomes a <strong>superfluid</strong> — zero viscosity, flows without friction. This is a macroscopic quantum phenomenon: a macroscopic fraction of atoms condense into the single lowest energy state (Bose-Einstein condensation).<br><br>
+      ³He atoms are fermions (odd total spin). They become superfluid only below ~2.6 mK through a Cooper-pair-like mechanism — pairs of ³He atoms form composite bosons.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Bose-Einstein condensation (BEC)</div>
+      <div class="btext">Below a critical temperature T_c, a macroscopic fraction of bosons pile into the ground state — they all share the same quantum state. This is the BE analogue of the FD Fermi sea. First demonstrated in 1995 in dilute atomic gases (Rb, Na) at ~100 nK. Nobel Prize 2001.</div>
+      <div class="box box-s">Symmetry of boson wavefunctions: if you exchange two identical bosons, ψ → +ψ (symmetric). This is what allows and even encourages multiple occupancy of the same state — unlike fermions where ψ → −ψ forces Pauli exclusion.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════════════
+     CHAPTER 10: MOLECULES & SOLIDS
+═══════════════════════════════════════ -->
+<div class="sec-hdr" id="ch10">
+  <div><div class="sec-num">Chapter 10</div><div class="sec-title" style="color:var(--m)">Molecules & Solids</div></div>
+  <span class="sec-tag st-m">§10.1 – 10.6</span>
+</div>
+
+<!-- M1: Molecular Bonding & Spectra -->
+<div class="topic open" id="m1">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">10.1</span><div><div class="t-name">Molecular Bonding & Spectra</div><div class="t-sub">Bond types, bonding/antibonding orbitals, rot & vib energy levels</div></div></div>
+    <div class="t-right"><span class="badge b-hot">§10.1 · most tested</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Types of molecular bonds</div>
+      <div class="box box-m">
+        <strong>Ionic</strong>: electron transfer (Na⁺Cl⁻). Electrostatic attraction. ~1–4 eV binding.<br>
+        <strong>Covalent</strong>: shared electrons (H₂, C-C). Quantum origin — see below. Strongest bonds.<br>
+        <strong>van der Waals</strong>: induced dipole-dipole (noble gases, DNA bases). Very weak, ~meV.<br>
+        <strong>Hydrogen bond</strong>: partially shared H between electronegative atoms (water, DNA). ~0.1–0.5 eV.<br>
+        <strong>Metallic</strong>: electrons delocalized across lattice (Na, Cu). Free electron sea.
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Bonding & antibonding orbitals (covalent bond origin)</div>
+      <div class="btext">Take two hydrogen atoms. Each has a 1s wavefunction ψ_A and ψ_B. When atoms approach, form two superpositions:</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Symmetric (even) superposition → bonding orbital</div>
+        ψ₊ = ψ_A + ψ_B
+      </div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Antisymmetric (odd) superposition → antibonding orbital</div>
+        ψ₋ = ψ_A − ψ_B
+      </div>
+      <div class="btext"><strong>Bonding (ψ₊)</strong>: constructive interference → electron density builds up <em>between</em> nuclei → screens nuclear repulsion → lowers energy → stable bond. Equilibrium bond length ~1.1 Å for H₂⁺.<br><br>
+      <strong>Antibonding (ψ₋)</strong>: destructive interference → node between nuclei → electron density pushed <em>away</em> → nuclei repel → energy increases with decreasing r → no stable bond.</div>
+      <div class="box box-m">This is the microscopic origin of bands in solids. Scale to N atoms: each bonding/antibonding pair splits into N levels → the levels are so closely spaced they form a continuous <strong>band</strong>. Bonding states = bottom of band, antibonding = top.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Rotational energy levels</div>
+      <div class="btext">Diatomic molecule rotating about center of mass. Quantum number ℓ = 0, 1, 2, …</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Rotational energy</div>
+        E_rot = ℓ(ℓ+1) ℏ²/2I,   I = μr²,   μ = m₁m₂/(m₁+m₂)
+      </div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Selection rule for electric dipole rotational transitions</div>
+        Δℓ = ±1 (molecule must have permanent dipole moment)
+      </div>
+      <div class="btext">Transition ℓ → ℓ−1 emits photon of energy ΔE = ℏ²ℓ/I. Energy spacings ~meV → <strong>microwave spectroscopy</strong>. Lines are equally spaced in frequency.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Vibrational energy levels</div>
+      <div class="btext">Near equilibrium the potential is parabolic → quantum harmonic oscillator, n = 0, 1, 2, …</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Vibrational energy</div>
+        E_vib = (n + ½)hf₀,   f₀ = (1/2π)√(κ/μ)
+      </div>
+      <div class="btext">κ = bond spring constant. Zero-point energy = hf₀/2 even at n = 0. Spacings ~0.1 eV → <strong>infrared spectroscopy</strong>. Selection rule: Δn = ±1.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Vibration and rotation combined</div>
+      <div class="btext">Real molecules vibrate AND rotate simultaneously. Total energy:</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Combined energy</div>
+        E = (n + ½)hf₀ + ℓ(ℓ+1)ℏ²/2I
+      </div>
+      <div class="btext">Transitions obey Δn = ±1 and Δℓ = ±1. This gives two branches in the IR spectrum:<br>
+      <strong>R branch</strong>: Δℓ = +1 → lines at higher frequency than the vibrational frequency.<br>
+      <strong>P branch</strong>: Δℓ = −1 → lines at lower frequency.<br>
+      Each branch shows equally spaced lines with spacing 2ℏ²/I (the rotational spacing).</div>
+      <div class="box box-m">Energy scale hierarchy (must memorize): Electronic ~ eV (UV/visible) &gt; Vibrational ~ 0.1 eV (IR) &gt; Rotational ~ meV (microwave). Exam problem: given a transition, identify which type it is from the photon wavelength.</div>
+    </div>
+  </div>
+</div>
+
+<!-- M2: Lasers -->
+<div class="topic" id="m2">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">10.2</span><div><div class="t-name">Stimulated Emission & Lasers</div><div class="t-sub">Population inversion, three/four-level systems</div></div></div>
+    <div class="t-right"><span class="badge b-key">§10.2</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Three processes of light-matter interaction</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Absorption: atom in lower state E₁ absorbs photon → goes to E₂</div>
+        E_photon = E₂ − E₁ = hf
+      </div>
+      <div class="btext"><strong>Spontaneous emission</strong>: atom in E₂ randomly decays to E₁, emits photon in random direction. Rate ∝ population of E₂.<br><br>
+      <strong>Stimulated emission</strong>: incoming photon of frequency f triggers atom in E₂ to emit a second photon — identical frequency, phase, direction, polarization. This is coherent amplification. Rate ∝ (photon density) × (population of E₂).</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Population inversion</div>
+      <div class="btext">Normally (thermal equilibrium), lower energy states are more populated (MB: N₂/N₁ = e^(−ΔE/kT) &lt; 1). For laser action, you need <strong>population inversion</strong>: N₂ &gt; N₁ so stimulated emission dominates absorption. This cannot be achieved with a two-level system (absorption and stimulated emission are equally probable).</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Three-level and four-level laser systems</div>
+      <div class="btext"><strong>Three-level (e.g. Ruby)</strong>: pump to level 3, fast non-radiative decay to metastable level 2, laser transition 2→1 (ground state). Problem: must deplete ground state more than half — requires intense pumping.<br><br>
+      <strong>Four-level (e.g. Nd:YAG, He-Ne)</strong>: pump to level 4, decay to metastable level 3, laser 3→2, fast decay back to ground 1. Level 2 is nearly always empty → inversion is easier to achieve. More efficient.</div>
+      <div class="box box-m">LASER = Light Amplification by Stimulated Emission of Radiation. Three requirements: (1) gain medium, (2) population inversion via pumping, (3) optical cavity (mirrors) for feedback and coherence.</div>
+    </div>
+  </div>
+</div>
+
+<!-- M3: Structural Properties -->
+<div class="topic" id="m3">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">10.3</span><div><div class="t-name">Structural Properties of Solids</div><div class="t-sub">Crystal types, X-ray diffraction, Bragg's law</div></div></div>
+    <div class="t-right"><span class="badge b-std">§10.3</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Types of solids</div>
+      <div class="box box-m">
+        <strong>Ionic crystals</strong> (NaCl): held by Coulomb attraction between ions. Hard, high melting point, insulators.<br>
+        <strong>Covalent solids</strong> (diamond, Si): shared electrons, strong directional bonds. Very hard.<br>
+        <strong>Metallic</strong> (Cu, Fe): free electron gas, good conductors.<br>
+        <strong>Molecular solids</strong> (ice, dry ice): van der Waals between molecules. Soft, low melting point.<br>
+        <strong>Hydrogen-bonded</strong> (ice): directional H-bonds.
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Crystal lattice structures</div>
+      <div class="btext">Common cubic lattices: simple cubic (SC, 1 atom/cell), body-centered cubic (BCC, 2 atoms/cell), face-centered cubic (FCC, 4 atoms/cell). Lattice constant a = unit cell edge.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Bragg's law — X-ray diffraction</div>
+      <div class="btext">X-rays of wavelength λ diffract off parallel crystal planes separated by distance d. Constructive interference when path difference = nλ:</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Bragg's law — θ is glancing angle measured FROM the plane (not from normal)</div>
+        2d · sin θ = nλ,   n = 1, 2, 3, ...
+      </div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Interplanar spacing for cubic lattice (Miller indices hkl)</div>
+        d_hkl = a / √(h² + k² + l²)
+      </div>
+      <div class="box box-m">Exam workflow: given θ and λ → find d from Bragg. Given d and lattice type → find a. Or given a → find θ for each (hkl) plane. Remember (100): d = a, (110): d = a/√2, (111): d = a/√3.</div>
+    </div>
+  </div>
+</div>
+
+<!-- M4: Thermal & Magnetic -->
+<div class="topic" id="m4">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">10.4</span><div><div class="t-name">Thermal & Magnetic Properties of Solids</div><div class="t-sub">Phonons, heat capacity, dia/para/ferromagnetism</div></div></div>
+    <div class="t-right"><span class="badge b-key">§10.4</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Phonons</div>
+      <div class="btext">Quantized lattice vibrations. Phonons are <strong>bosons</strong> (integer spin) with μ = 0 → follow Planck/Bose-Einstein distribution. Average phonon number per mode: ⟨n⟩ = 1/[e^(ℏω/kT) − 1].</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Einstein model of heat capacity</div>
+      <div class="btext">All N atoms vibrate at the same frequency f₀. Each = independent quantum harmonic oscillator.</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Einstein heat capacity</div>
+        C_v = 3Nk(hf₀/kT)² · e^(hf₀/kT) / [e^(hf₀/kT) − 1]²
+      </div>
+      <div class="btext">Correct at high T. At low T: decays <em>exponentially</em> — this is wrong for real solids.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Debye model</div>
+      <div class="btext">Allows range of phonon frequencies 0 to ω_D (Debye cutoff). Debye temperature θ_D = ℏω_D/k.</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Low-T limit (T ≪ θ_D) — Debye T³ law</div>
+        C_v ∝ T³
+      </div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">High-T limit (both Einstein and Debye) — Dulong-Petit</div>
+        C_v → 3Nk = 3R per mole
+      </div>
+      <div class="box box-m">Physical reason for T³: at low T only long-wavelength (low-ω) phonons excited. Debye density of states g(ω) ∝ ω². Number of excited phonons ∝ T³ → total energy ∝ T⁴ → C_v = dE/dT ∝ T³.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Thermal expansion</div>
+      <div class="btext">Due to asymmetry of the interatomic potential — it is not a perfect parabola. As T increases, atoms spend more time on the "softer" high-r side → average separation increases. If potential were perfectly symmetric (harmonic), no thermal expansion would occur.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Magnetic properties of solids</div>
+      <div class="btext"><strong>Diamagnetism</strong>: all materials — induced magnetic moments oppose external field. Very weak, negative χ. Originates from orbital motion of electrons.<br><br>
+      <strong>Paramagnetism</strong>: materials with unpaired electrons (permanent magnetic dipoles). Dipoles align with external field → positive χ. Random at high T (Curie law: M ∝ 1/T).<br><br>
+      <strong>Ferromagnetism</strong> (Fe, Ni, Co): quantum exchange interaction causes neighboring dipoles to align parallel → macroscopic magnetization even without external field. Below Curie temperature T_C. Above T_C: becomes paramagnetic.<br><br>
+      <strong>Antiferromagnetism</strong>: alternating antiparallel alignment → zero net magnetization. Below Néel temperature.</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">Curie law (paramagnetism)</div>
+        M = C·B/T   (C = Curie constant)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M5: Superconductivity -->
+<div class="topic" id="m5">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">10.5</span><div><div class="t-name">Superconductivity</div><div class="t-sub">Zero resistance, Meissner effect, Cooper pairs, BCS</div></div></div>
+    <div class="t-right"><span class="badge b-new">§10.5–10.6</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">What is superconductivity?</div>
+      <div class="btext">Below a critical temperature T_c, certain materials have exactly <strong>zero electrical resistance</strong>. Not just very small — actually zero. Current flows indefinitely without dissipation. First discovered by Kamerlingh Onnes in mercury (T_c = 4.2 K) in 1911.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Meissner effect</div>
+      <div class="btext">A superconductor expels all magnetic flux from its interior — <strong>perfect diamagnetism</strong>. B = 0 inside. Surface currents flow to exactly cancel any applied field. This is NOT just perfect conductivity (a perfect conductor would trap flux) — the Meissner effect is a distinct thermodynamic property. Enables magnetic levitation.</div>
+      <div class="btext">If the applied field exceeds a critical field H_c, superconductivity is destroyed.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">BCS theory & Cooper pairs</div>
+      <div class="btext">Bardeen, Cooper, and Schrieffer (Nobel 1972) explained superconductivity. Mechanism: an electron moving through the lattice distorts it slightly (phonon), which attracts a second electron. These two electrons form a <strong>Cooper pair</strong> — a bound state via phonon exchange.<br><br>
+      Cooper pairs have spin 0 (integer) → they are <strong>bosons</strong>. All Cooper pairs condense into the same ground state → macroscopic quantum coherence → no scattering → zero resistance.</div>
+      <div class="eq eq-m">
+        <div class="eq-lbl">BCS energy gap (binding energy of Cooper pair)</div>
+        2Δ ≈ 3.52 kT_c
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Type I vs Type II superconductors</div>
+      <div class="btext"><strong>Type I</strong>: single critical field H_c. Meissner effect complete below H_c. Most pure metals.<br><br>
+      <strong>Type II</strong>: two critical fields H_c1 and H_c2. Between them: partial flux penetration in quantized vortices (mixed state). High-T superconductors (YBCO, cuprates) are Type II with T_c up to 135 K. Used in MRI, maglev.</div>
+      <div class="box box-m">Applications: Josephson junctions (quantum interference devices, SQUIDs), maglev trains, MRI magnets, particle accelerator magnets, next-gen quantum computers.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════════════
+     CHAPTER 11: SEMICONDUCTORS
+═══════════════════════════════════════ -->
+<div class="sec-hdr" id="ch11">
+  <div><div class="sec-num">Chapter 11</div><div class="sec-title" style="color:var(--p)">Semiconductor Theory & Devices</div></div>
+  <span class="sec-tag st-p">§11.1 – 11.4</span>
+</div>
+
+<!-- P1: Band Theory -->
+<div class="topic open" id="p1">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">11.1</span><div><div class="t-name">Band Theory of Solids</div><div class="t-sub">Origin of bands, band gaps, metals vs insulators vs semiconductors</div></div></div>
+    <div class="t-right"><span class="badge b-hot">§11.1 · foundation</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">How bands form</div>
+      <div class="btext">Isolated atom: discrete energy levels (1s, 2s, 2p, …). Two atoms: each level splits into bonding + antibonding (as in §10.1). N atoms: each level splits into N closely-spaced levels → a continuous <strong>band</strong>. Gaps between bands = forbidden energies where no Bloch states exist.</div>
+      <div class="btext">Physical origin of gaps: electron waves (Bloch waves) diffract off the periodic lattice. At Brillouin zone boundaries (k = nπ/a), standing waves form — two standing waves with different charge distributions have different energies → gap.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Metals, insulators, semiconductors</div>
+      <div class="box box-p">
+        <strong>Metal</strong>: valence band partially filled OR bands overlap. Electrons at E_f can accept tiny energy → conductors.<br>
+        <strong>Insulator</strong>: valence band completely full, conduction band empty, gap E_g &gt; 5 eV. kT at room temp can't excite electrons across.<br>
+        <strong>Semiconductor</strong>: like insulator but small gap, E_g ~ 0.1–3 eV. Thermal excitation possible at room temperature.
+      </div>
+      <div class="btext">Key values: Si E_g = 1.1 eV (indirect gap). Ge E_g = 0.67 eV. GaAs E_g = 1.4 eV (direct gap). Diamond E_g = 5.5 eV (insulator).</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Effective mass</div>
+      <div class="btext">Electrons in a crystal accelerate according to the band curvature, not free-particle mass. Effective mass m* defined from the E-k dispersion:</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Effective mass</div>
+        1/m* = (1/ℏ²) · d²E/dk²
+      </div>
+      <div class="btext">At conduction band minimum: positive curvature → m*_e &gt; 0. At valence band maximum: negative curvature → m* &lt; 0 → <strong>holes</strong>.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Holes</div>
+      <div class="btext">A missing electron near the top of the valence band behaves as a positive charge carrier with positive effective mass m*_h. Holes move in the same direction as E field (opposite to electrons). Holes have energy measured <em>downward</em> from the valence band maximum.</div>
+    </div>
+  </div>
+</div>
+
+<!-- P2: Semiconductor Theory -->
+<div class="topic" id="p2">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">11.2</span><div><div class="t-name">Semiconductor Theory</div><div class="t-sub">Intrinsic, doping, carrier concentrations, Fermi level</div></div></div>
+    <div class="t-right"><span class="badge b-hot">§11.2 · most tested</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Intrinsic semiconductors</div>
+      <div class="btext">Pure semiconductor at T &gt; 0: thermal energy promotes electrons from valence to conduction band, creating equal numbers of electrons (n) and holes (p).</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Intrinsic carrier concentration (n = p = nᵢ)</div>
+        nᵢ = √(NcNv) · e^(−Eg/2kT)
+      </div>
+      <div class="btext">For Si at 300K: nᵢ ≈ 1.5 × 10¹⁰ cm⁻³. Fermi level sits approximately at midgap.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Extrinsic (doped) semiconductors</div>
+      <div class="box box-p">
+        <strong>n-type</strong>: add Group V (P, As, Sb) to Si. Extra electron donated to conduction band. Donor level just below E_c. Electrons = majority carriers.<br>
+        <strong>p-type</strong>: add Group III (B, Al, Ga) to Si. Accepts electron from valence band, creating hole. Acceptor level just above E_v. Holes = majority carriers.
+      </div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Donor binding energy (hydrogen-like, screened)</div>
+        E_d = (m*/m)(1/εᵣ²) · 13.6 eV
+      </div>
+      <div class="btext">For Si: E_d ≈ 0.025 eV ≈ kT at 300K → donors nearly fully ionized at room temperature.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Mass action law</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Always true in thermal equilibrium</div>
+        n · p = nᵢ²
+      </div>
+      <div class="btext">For n-type (n ≈ N_d): p = nᵢ²/N_d. If N_d = 10¹⁶ cm⁻³: p = 10²⁰/10¹⁶ = 10⁴ cm⁻³. Minority carriers suppressed enormously.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Fermi level shift upon doping</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">n-type: E_f moves toward conduction band</div>
+        E_f = E_fi + kT · ln(N_d/nᵢ)
+      </div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">p-type: E_f moves toward valence band</div>
+        E_f = E_fi − kT · ln(N_a/nᵢ)
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Conductivity</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Total semiconductor conductivity</div>
+        σ = e(nμ_e + pμ_h)
+      </div>
+      <div class="btext">For Si at 300K: μ_e ≈ 1350 cm²/V·s, μ_h ≈ 480 cm²/V·s. Conductivity increases with T (unlike metals) because nᵢ grows exponentially — this dominates over mobility decrease from phonon scattering.</div>
+    </div>
+  </div>
+</div>
+
+<!-- P3: Devices -->
+<div class="topic" id="p3">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">11.3</span><div><div class="t-name">Semiconductor Devices</div><div class="t-sub">p-n junction, diode, LED, solar cell, transistor</div></div></div>
+    <div class="t-right"><span class="badge b-hot">§11.3 · most tested</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">p-n junction at equilibrium</div>
+      <div class="btext">Join p-type and n-type. Electrons diffuse to p-side, holes to n-side. Ionized donors (+) left on n-side, ionized acceptors (−) on p-side → <strong>depletion region</strong> with built-in electric field opposing diffusion. Equilibrium: Fermi levels align. No net current.</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Built-in contact potential</div>
+        V₀ = (kT/e) · ln(N_a N_d / nᵢ²)
+      </div>
+      <div class="btext">~0.6–0.7 V for Si. Thermal voltage kT/e = 0.026 V at 300K.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Ideal diode equation (Shockley)</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">p-n junction I-V characteristic</div>
+        I = I₀ · [e^(eV/kT) − 1]
+      </div>
+      <div class="btext"><strong>Forward bias</strong> (V &gt; 0): exponential current rise. Barrier lowered → majority carriers flood across.<br>
+      <strong>Reverse bias</strong> (V &lt; 0): I → −I₀. Barrier raised → only thermally generated minority carriers trickle across.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Light-emitting diode (LED)</div>
+      <div class="btext">Forward biased p-n junction in a direct-gap semiconductor (GaAs, GaN). Electrons injected into p-side recombine with holes → emit photon with E = hf ≈ E_g. Photon wavelength: λ = hc/E_g. GaN gives blue/UV LEDs (Nakamura, Nobel 2014).</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Solar cell (photovoltaic)</div>
+      <div class="btext">Reverse of LED. Photon with hf &gt; E_g absorbed → creates electron-hole pair. Built-in field of p-n junction separates them → current flows in external circuit. Open-circuit voltage ≈ V₀. Efficiency limited by: photons with hf &lt; E_g not absorbed; photons with hf ≫ E_g lose excess energy as heat.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Transistor (MOSFET)</div>
+      <div class="btext">Metal-Oxide-Semiconductor Field-Effect Transistor. Gate voltage controls carrier density in the channel between source and drain. Positive gate voltage on n-channel MOSFET: attracts electrons → channel forms → current flows. Acts as voltage-controlled switch or amplifier. Basis of all modern digital logic.</div>
+      <div class="box box-p">Moore's Law: transistor count on a chip doubles ~every 2 years. Now at ~10¹⁰ transistors per chip. Feature sizes approaching fundamental quantum limits — reason for interest in new materials (graphene, 2D materials) and quantum computing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- P4: Nanotechnology -->
+<div class="topic" id="p4">
+  <div class="t-head" onclick="toggle(this.parentElement)">
+    <div class="t-left"><span class="t-idx">11.4</span><div><div class="t-name">Nanotechnology</div><div class="t-sub">Quantum confinement, quantum dots, graphene</div></div></div>
+    <div class="t-right"><span class="badge b-new">§11.4 · new content</span><span class="chev">▼</span></div>
+  </div>
+  <div class="t-body">
+    <div class="block">
+      <div class="blabel">Quantum confinement</div>
+      <div class="btext">When a semiconductor structure is made small enough (comparable to the de Broglie wavelength of electrons, ~1–10 nm), the electrons are quantum mechanically confined. This discretizes the energy levels — instead of bands, you get quantized levels like a particle in a box. The energy spacing increases as size decreases.</div>
+      <div class="eq eq-p">
+        <div class="eq-lbl">Confinement energy (particle in 3D box) scales as</div>
+        E_n ∝ 1/L²  (L = confinement dimension)
+      </div>
+    </div>
+    <div class="block">
+      <div class="blabel">Quantum dots</div>
+      <div class="btext">Nanocrystals of semiconductor (~2–10 nm) confined in all 3 dimensions → fully discrete spectrum. <strong>Tunable bandgap</strong>: smaller dot → larger gap → shorter wavelength emission. Same material (CdSe) emits blue (small dot) to red (large dot) by simply changing size. Applications: QLED displays, biological imaging, solar cells.</div>
+    </div>
+    <div class="block">
+      <div class="blabel">Graphene & 2D materials</div>
+      <div class="btext">Graphene = single atomic layer of carbon in hexagonal lattice. Extraordinary properties: electrons behave as massless relativistic particles (Dirac fermions) → extremely high mobility. Mechanically strongest material known. Conducts heat extremely well. 2D confinement → new physics not present in bulk. Nobel 2010 (Geim, Novoselov).</div>
+      <div class="box box-p">Nanotechnology is where semiconductor physics meets quantum mechanics directly. The particle-in-a-box and harmonic oscillator you solved in QM are the actual models for quantum dots and carbon nanotubes.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- FORMULA SHEET -->
+<div id="formulas">
+  <div class="sec-hdr">
+    <div><div class="sec-num">Appendix</div><div class="sec-title">Formula Sheet</div></div>
+    <span class="sec-tag" style="background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)">All chapters</span>
+  </div>
+
+  <div class="fgrid">
+    <div class="fcard" style="border-left:2.5px solid var(--s)">
+      <div class="fcard-title" style="color:var(--s)">Ch 9 · Statistical Physics</div>
+      <div class="fline">v_p = √(2kT/m)<span class="fdesc">Most probable speed</span></div>
+      <div class="fline">v_rms = √(3kT/m)<span class="fdesc">RMS speed; ordering v_p &lt; ⟨v⟩ &lt; v_rms</span></div>
+      <div class="fline">⟨E⟩ = f/2 · kT per DOF<span class="fdesc">Equipartition; f = # quadratic DOF</span></div>
+      <div class="fline">f_FD = 1/[e^((E−Ef)/kT) + 1]<span class="fdesc">Fermi-Dirac; = ½ at E = Ef always</span></div>
+      <div class="fline">E_f = (ℏ²/2m)(3π²n)^(2/3)<span class="fdesc">Fermi energy, free electron gas</span></div>
+      <div class="fline">v_f = √(2E_f/m)<span class="fdesc">Fermi velocity</span></div>
+      <div class="fline">f_BE = 1/[e^((E−μ)/kT) − 1]<span class="fdesc">Bose-Einstein; μ=0 for photons</span></div>
+      <div class="fline">λ_max · T = 2.898×10⁻³ m·K<span class="fdesc">Wien's law</span></div>
+      <div class="fline">P/A = σT⁴, σ=5.67×10⁻⁸ W/m²K⁴<span class="fdesc">Stefan-Boltzmann</span></div>
+    </div>
+
+    <div class="fcard" style="border-left:2.5px solid var(--m)">
+      <div class="fcard-title" style="color:var(--m)">Ch 10 · Molecules & Solids</div>
+      <div class="fline">E_rot = ℓ(ℓ+1)ℏ²/2I<span class="fdesc">Rotation; Δℓ=±1; spacing = 2ℏ²ℓ/I</span></div>
+      <div class="fline">I = μr², μ = m₁m₂/(m₁+m₂)<span class="fdesc">Moment of inertia, reduced mass</span></div>
+      <div class="fline">E_vib = (n+½)hf₀<span class="fdesc">Vibration; Δn=±1; ZPE = hf₀/2</span></div>
+      <div class="fline">f₀ = (1/2π)√(κ/μ)<span class="fdesc">Vibrational frequency</span></div>
+      <div class="fline">2d sinθ = nλ<span class="fdesc">Bragg's law (θ from plane)</span></div>
+      <div class="fline">d_hkl = a/√(h²+k²+l²)<span class="fdesc">Interplanar spacing, cubic</span></div>
+      <div class="fline">C_v → 3Nk high T (Dulong-Petit)<span class="fdesc">Both Einstein and Debye</span></div>
+      <div class="fline">C_v ∝ T³ low T<span class="fdesc">Debye model only</span></div>
+      <div class="fline">2Δ ≈ 3.52 kT_c<span class="fdesc">BCS superconducting gap</span></div>
+    </div>
+
+    <div class="fcard" style="border-left:2.5px solid var(--p);grid-column:1/-1">
+      <div class="fcard-title" style="color:var(--p)">Ch 11 · Semiconductor Theory & Devices</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem">
+        <div>
+          <div class="fline">nᵢ = √(NcNv)·e^(−Eg/2kT)<span class="fdesc">Intrinsic carrier concentration</span></div>
+          <div class="fline">n · p = nᵢ² (always)<span class="fdesc">Mass action law</span></div>
+          <div class="fline">E_d = (m*/m)(1/εᵣ²)·13.6 eV<span class="fdesc">Donor binding energy</span></div>
+          <div class="fline">σ = e(nμ_e + pμ_h)<span class="fdesc">Conductivity (both carriers)</span></div>
+        </div>
+        <div>
+          <div class="fline">V₀ = (kT/e)·ln(N_a N_d/nᵢ²)<span class="fdesc">p-n built-in potential</span></div>
+          <div class="fline">I = I₀·[e^(eV/kT) − 1]<span class="fdesc">Shockley diode equation</span></div>
+          <div class="fline">kT/e ≈ 0.026 V at 300K<span class="fdesc">Thermal voltage</span></div>
+          <div class="fline">λ = hc/E_g<span class="fdesc">LED emission wavelength</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fcard" style="margin-top:0">
+    <div class="fcard-title">Fundamental Constants</div>
+    <div class="const-row">
+      <span class="const">k = 8.617×10⁻⁵ eV/K</span>
+      <span class="const">h = 6.626×10⁻³⁴ J·s</span>
+      <span class="const">ℏ = 1.055×10⁻³⁴ J·s</span>
+      <span class="const">e = 1.602×10⁻¹⁹ C</span>
+      <span class="const">m_e = 9.109×10⁻³¹ kg</span>
+      <span class="const">c = 3×10⁸ m/s</span>
+      <span class="const">N_A = 6.022×10²³</span>
+      <span class="const">kT (300K) = 0.026 eV</span>
+      <span class="const">1 eV = 1.602×10⁻¹⁹ J</span>
+    </div>
+  </div>
+</div>
+
+<div style="height:5rem"></div>
+</main>
+
+<script>
+function toggle(card){
+  const isOpen = card.classList.contains('open');
+  card.classList.toggle('open',!isOpen);
+}
+// open first card of each chapter by default
+document.querySelectorAll('#s1,#m1,#p1').forEach(el=>el.classList.add('open'));
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
+
